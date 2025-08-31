@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact · Park JY</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --fg:#0f172a; --muted:#6b7280; --bg:#f8fafc; --card:#ffffff; --pri:#2563eb;}
+    *{box-sizing:border-box} html,body{margin:0;padding:0;font-family:Inter,system-ui; color:var(--fg); background:var(--bg);}
+    a{color:var(--pri); text-decoration:none}
+    .wrap{max-width:600px;margin:48px auto;padding:20px}
+    header{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px}
+    .brand{font-weight:800;font-size:20px}
+    nav a{margin-left:16px;color:var(--muted)}
+    h1{font-size:28px;margin:0 0 24px}
+    form{background:var(--card);padding:24px;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.05);}
+    label{display:block;margin-top:12px;font-weight:600}
+    input,textarea{width:100%;padding:12px;border:1px solid #d1d5db;border-radius:8px;margin-top:6px;font-size:14px}
+    button{margin-top:16px;padding:12px 20px;background:var(--pri);color:#fff;border:none;border-radius:8px;font-size:16px;cursor:pointer}
+    button:hover{filter:brightness(.95)}
+    footer{margin:48px 0 16px;color:var(--muted);font-size:14px;text-align:center}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">Park JY</div>
+      <nav>
+        <a href="index.html">Projects</a>
+        <a href="portfolio.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </header>
+
+    <h1>Contact</h1>
+    <form action="https://formspree.io/f/xxxxxx" method="POST">
+      <label>이름</label>
+      <input type="text" name="name" required>
+      <label>이메일</label>
+      <input type="email" name="_replyto" required>
+      <label>메시지</label>
+      <textarea name="message" rows="5" required></textarea>
+      <button type="submit">보내기</button>
+    </form>
+
+    <footer>© <span id="y"></span> Park JY. All rights reserved.</footer>
+  </div>
+  <script>document.getElementById('y').textContent=new Date().getFullYear()</script>
+</body>
+</html>
