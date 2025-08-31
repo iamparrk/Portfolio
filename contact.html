@@ -56,21 +56,66 @@
     </header>
 
     <h1>Contact</h1>
-    <form action="https://formspree.io/f/mqadbvjy" method="POST">
-      <label>이름</label>
-      <input type="text" name="name" required>
-      <label>이메일</label>
-      <input type="email" name="_replyto" required>
-      <label>메시지</label>
-      <textarea name="message" rows="5" required></textarea>
-      <button type="submit">보내기</button>
-    </form>
+<form id="fs-form">
+  <label>이름
+    <input type="text" name="name" required>
+  </label>
+  <label>이메일
+    <input type="email" name="email" required>
+  </label>
+  <label>메시지
+    <textarea name="message" rows="5" required></textarea>
+  </label>
+  <input type="hidden" name="_subject" value="Portfolio 문의">
+  <input type="text" name="_gotcha" style="display:none"> <!-- 봇 방지 -->
+  <button type="submit">보내기</button>
+  <p id="fs-msg" style="margin-top:8px;color:#6b7280"></p>
+</form>
+
+<!-- 간단 토스트 -->
+<div id="toast" style="
+  position:fixed; left:50%; bottom:24px; transform:translateX(-50%);
+  background:#111827; color:#fff; padding:10px 14px; border-radius:8px;
+  font-size:14px; display:none; z-index:50;">보냈습니다! 곧 답장드릴게요 🙌</div>
+
+<script>
+const ENDPOINT = 'FORM_ENDPOINT_HERE'; // ← 여기를 본인 Endpoint로!
+const form = document.getElementById('fs-form');
+const msg  = document.getElementById('fs-msg');
+const toast = document.getElementById('toast');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();                // 페이지 이동 막기
+  msg.textContent = '전송 중...';
+  try {
+    const res = await fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: new FormData(form)
+    });
+    if (res.ok) {
+      msg.textContent = '';
+      form.reset();
+      // 토스트 잠깐 보여주기
+      toast.style.display = 'block';
+      setTimeout(() => toast.style.display = 'none', 2500);
+    } else {
+      const data = await res.json().catch(() => ({}));
+      msg.textContent = (data && data.error) ? data.error : '전송 실패: 잠시 후 다시 시도해주세요.';
+    }
+  } catch {
+    msg.textContent = '네트워크 오류가 발생했어요.';
+  }
+});
+</script>
+
 
     <footer>© <span id="y"></span> Park JY. All rights reserved.</footer>
   </div>
   <script>document.getElementById('y').textContent=new Date().getFullYear()</script>
 </body>
 </html>
+
 
 
 
