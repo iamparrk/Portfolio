@@ -60,32 +60,31 @@
   <label>이름
     <input type="text" name="name" required>
   </label>
-
   <label>이메일
     <input type="email" name="email" required>
   </label>
-
   <label>메시지
     <textarea name="message" rows="5" required></textarea>
   </label>
 
-  <!-- ✅ 추가: 제출 후 돌아올 페이지 -->
+  <!-- 🔴 반드시 폼 내부에, submit 버튼 위쪽에 위치시키기 -->
   <input type="hidden" name="_next" value="https://iamparrk.github.io/Portfolio/contact.html#thanks">
+  <input type="hidden" name="_subject" value="Portfolio 문의">
+  <input type="text" name="_gotcha" style="display:none"> <!-- 봇 방지 -->
 
   <button type="submit">보내기</button>
 </form>
 
-<!-- ✅ 돌아왔을 때 메시지 보여주기 -->
+<!-- 돌아온 뒤 표시될 영역 -->
 <div id="thanks" style="margin-top:16px;color:#16a34a;font-weight:600;display:none;">
   보냈습니다! 곧 답장드릴게요 🙌
 </div>
-
 <script>
-// URL에 #thanks가 있으면 메시지 보이기
-if (window.location.hash === "#thanks") {
-  document.getElementById("thanks").style.display = "block";
-}
+  if (location.hash === '#thanks') {
+    document.getElementById('thanks').style.display = 'block';
+  }
 </script>
+
 
 
     <footer>© <span id="y"></span> Park JY. All rights reserved.</footer>
@@ -93,6 +92,7 @@ if (window.location.hash === "#thanks") {
   <script>document.getElementById('y').textContent=new Date().getFullYear()</script>
 </body>
 </html>
+
 
 
 
