@@ -43,43 +43,37 @@
   h1{font-size:28px;margin:0 0 24px}
   footer{margin:48px 0 16px;color:var(--muted);font-size:14px;text-align:center}
 
+<style>
 /* 탭 바 */
 .tabs{
   display:flex; gap:8px; align-items:center;
   background:#fff; border:1px solid #e5e7eb; border-radius:12px;
-  padding:8px 10px;
-  box-shadow:0 6px 20px rgba(0,0,0,.04);
-  overflow:auto; /* 모바일 가로스크롤 */
+  padding:8px 10px; box-shadow:0 6px 20px rgba(0,0,0,.04);
+  overflow:auto;
 }
 .tab{
-  position:relative;
-  padding:10px 14px;
-  border:0; background:transparent; cursor:pointer;
-  color:#374151; font-weight:600; white-space:nowrap;
-  border-radius:8px; /* hover 배경 부드럽게 */
+  position:relative; padding:10px 14px; border:0; background:transparent;
+  cursor:pointer; color:#374151; font-weight:600; white-space:nowrap; border-radius:8px;
 }
-.tab:hover{ background:#f3f4f6; }
-.tab.active{ color:#1f2937; }
+.tab:hover{ background:#f3f4f6 }
+.tab.active{ color:#1f2937 }
 .tab.active::after{
   content:""; position:absolute; left:10px; right:10px; bottom:-8px;
   height:3px; background:#2563eb; border-radius:3px;
 }
 
-/* 카드 숨김 처리 */
-.card{display:block}
+/* 그리드(이미지 카드만) */
+.grid{display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); margin-top:14px}
+.card{display:block; border-radius:12px; overflow:hidden; box-shadow:0 6px 18px rgba(0,0,0,.05)}
+.card img{width:100%; display:block}
 .card[hidden]{display:none !important}
 
-    
-.lightbox{
-  position:fixed; inset:0; background:rgba(0,0,0,.85);
-  display:none; align-items:center; justify-content:center; z-index:50;
-}
-.lightbox.open{ display:flex; }
-.lightbox img{ max-width:90%; max-height:90%; border-radius:12px; }
-.lightbox .close{
-  position:absolute; top:16px; right:20px; font-size:28px; line-height:1;
-  background:transparent; border:0; color:#fff; cursor:pointer;
-}
+/* 라이트박스 */
+.lightbox{position:fixed; inset:0; background:rgba(0,0,0,.85); display:none; align-items:center; justify-content:center; z-index:50}
+.lightbox.open{display:flex}
+.lightbox img{max-width:90%; max-height:90%; border-radius:12px}
+.lightbox .close{position:absolute; top:16px; right:20px; font-size:28px; background:transparent; border:0; color:#fff; cursor:pointer}
+</style>
 
 
 <script>
@@ -118,43 +112,73 @@ setActive('all'); // 기본값: All
 
     <h1>Projects</h1>
     <!-- 탭 바 -->
-    <div class="tabs" role="tablist" aria-label="Project categories">
-      <button class="tab active" data-filter="all" role="tab" aria-selected="true">All</button>
-      <button class="tab" data-filter="branding" role="tab">Branding</button>
-      <button class="tab" data-filter="proposal" role="tab">Proposal</button>
-      <button class="tab" data-filter="uiux" role="tab">UI/UX</button>
-      <button class="tab" data-filter="planning" role="tab">Planning</button>
-      <button class="tab" data-filter="etc" role="tab">Etc</button>
-    </div>
-    
-
-<!-- 카드 그리드 -->
-<div class="grid">
-  <a class="card" href="#img1" data-cat="branding,print">
-    <img src="img/sample1.jpg" alt=""><span>브랜딩 키비주얼</span>
-  </a>
-  <a class="card" href="#img2" data-cat="proposal">
-    <img src="img/sample2.jpg" alt=""><span>제안서 리디자인</span>
-  </a>
-  <a class="card" href="#img3" data-cat="fan">
-    <img src="img/sample3.jpg" alt=""><span>팬서포트 굿즈</span>
-  </a>
-  <!-- 계속 추가 -->
+   <div class="tabs" role="tablist" aria-label="Project categories">
+  <button class="tab active" data-filter="all" role="tab" aria-selected="true">All</button>
+  <button class="tab" data-filter="branding" role="tab">Branding</button>
+  <button class="tab" data-filter="proposal" role="tab">Proposal</button>
+  <button class="tab" data-filter="print" role="tab">Print</button>
+  <button class="tab" data-filter="fan" role="tab">Fan Support</button>
+  <button class="tab" data-filter="etc" role="tab">Etc</button>
 </div>
 
-<!-- 라이트박스 (공용 1개만 둠) -->
+    
+
+<div class="grid">
+  <!-- data-cat에 카테고리 지정 (여러 개면 콤마로 구분) -->
+  <a class="card" data-cat="branding,print"><img src="img/sample1.jpg" alt="작업물1"></a>
+  <a class="card" data-cat="proposal"><img src="img/sample2.jpg" alt="작업물2"></a>
+  <a class="card" data-cat="fan"><img src="img/sample3.jpg" alt="작업물3"></a>
+  <!-- 계속 추가… -->
+</div>
+
+<!-- 공용 라이트박스 1개만 -->
 <div class="lightbox" id="lb">
   <button class="close" aria-label="닫기">×</button>
   <img alt="">
 </div>
 
 
-
     <footer>© <span id="y"></span> Park JY. All rights reserved.</footer>
   </div>
   <script>document.getElementById('y').textContent=new Date().getFullYear()</script>
+
+  <script>
+// 탭 필터
+const tabs  = document.querySelectorAll('.tabs .tab');
+const cards = document.querySelectorAll('.grid .card');
+
+function setActive(key){
+  tabs.forEach(t=>{
+    const on = t.dataset.filter === key;
+    t.classList.toggle('active', on);
+    t.setAttribute('aria-selected', on ? 'true' : 'false');
+  });
+  cards.forEach(c=>{
+    const cats = (c.dataset.cat || '').split(',').map(s=>s.trim());
+    c.hidden = (key !== 'all' && !cats.includes(key));
+  });
+}
+tabs.forEach(t => t.addEventListener('click', () => setActive(t.dataset.filter)));
+setActive('all'); // 기본: 전체 보기
+
+// 라이트박스 (이미지 클릭)
+const lb    = document.getElementById('lb');
+const lbImg = lb.querySelector('img');
+document.querySelectorAll('.grid .card img').forEach(img=>{
+  img.style.cursor = 'zoom-in';
+  img.addEventListener('click', e=>{
+    e.preventDefault();
+    lbImg.src = img.getAttribute('data-full') || img.src; // 큰 원본 쓰려면 data-full에 경로 지정
+    lb.classList.add('open');
+  });
+});
+lb.addEventListener('click', (e)=>{ if(e.target===lb || e.target.classList.contains('close')) lb.classList.remove('open'); });
+document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') lb.classList.remove('open'); });
+</script>
+
 </body>
 </html>
+
 
 
 
