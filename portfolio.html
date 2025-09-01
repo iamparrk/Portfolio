@@ -42,6 +42,55 @@
   /* 제목/푸터 */
   h1{font-size:28px;margin:0 0 24px}
   footer{margin:48px 0 16px;color:var(--muted);font-size:14px;text-align:center}
+
+/* 탭 바 */
+.tabs{
+  display:flex; gap:8px; align-items:center;
+  background:#fff; border:1px solid #e5e7eb; border-radius:12px;
+  padding:8px 10px;
+  box-shadow:0 6px 20px rgba(0,0,0,.04);
+  overflow:auto; /* 모바일 가로스크롤 */
+}
+.tab{
+  position:relative;
+  padding:10px 14px;
+  border:0; background:transparent; cursor:pointer;
+  color:#374151; font-weight:600; white-space:nowrap;
+  border-radius:8px; /* hover 배경 부드럽게 */
+}
+.tab:hover{ background:#f3f4f6; }
+.tab.active{ color:#1f2937; }
+.tab.active::after{
+  content:""; position:absolute; left:10px; right:10px; bottom:-8px;
+  height:3px; background:#2563eb; border-radius:3px;
+}
+
+/* 카드 숨김 처리 */
+.card{display:block}
+.card[hidden]{display:none !important}
+
+
+<script>
+const tabs = document.querySelectorAll('.tabs .tab');
+const cards = document.querySelectorAll('.grid .card');
+
+function setActive(key){
+  tabs.forEach(t=>{
+    const on = t.dataset.filter === key;
+    t.classList.toggle('active', on);
+    t.setAttribute('aria-selected', on ? 'true' : 'false');
+  });
+  cards.forEach(c=>{
+    const cats = (c.dataset.cat||'').split(',').map(s=>s.trim());
+    c.hidden = (key!=='all' && !cats.includes(key));
+  });
+}
+
+tabs.forEach(t=> t.addEventListener('click', ()=> setActive(t.dataset.filter)));
+setActive('all'); // 기본값: All
+</script>
+
+    
   </style>
 </head>
 <body>
@@ -56,6 +105,25 @@
     </header>
 
     <h1>Projects</h1>
+    <!-- 탭 바 -->
+    <div class="tabs" role="tablist" aria-label="Project categories">
+      <button class="tab active" data-filter="all" role="tab" aria-selected="true">All</button>
+      <button class="tab" data-filter="branding" role="tab">Branding</button>
+      <button class="tab" data-filter="proposal" role="tab">Proposal</button>
+      <button class="tab" data-filter="print" role="tab">Print</button>
+      <button class="tab" data-filter="fan" role="tab">Fan Support</button>
+      <button class="tab" data-filter="etc" role="tab">Etc</button>
+    </div>
+    
+  <!-- 카드 그리드 -->
+    <div class="grid">
+      <a class="card" href="#img1" data-cat="branding,print"><img src="img/sample1.jpg" alt=""><span>브랜딩 키비주얼</span></a>
+      <a class="card" href="#img2" data-cat="proposal"><img src="img/sample2.jpg" alt=""><span>제안서 리디자인</span></a>
+      <a class="card" href="#img3" data-cat="fan"><img src="img/sample3.jpg" alt=""><span>팬서포트 굿즈</span></a>
+      <!-- 계속 추가… -->
+    </div>
+</div>
+
     <div class="grid">
       <a href="#img1"><img class="thumb" src="img/sample1.jpg" alt="작업물1"></a>
       <a href="#img2"><img class="thumb" src="img/sample2.jpg" alt="작업물2"></a>
@@ -71,6 +139,7 @@
   <script>document.getElementById('y').textContent=new Date().getFullYear()</script>
 </body>
 </html>
+
 
 
 
