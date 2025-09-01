@@ -69,6 +69,18 @@
 .card{display:block}
 .card[hidden]{display:none !important}
 
+    
+.lightbox{
+  position:fixed; inset:0; background:rgba(0,0,0,.85);
+  display:none; align-items:center; justify-content:center; z-index:50;
+}
+.lightbox.open{ display:flex; }
+.lightbox img{ max-width:90%; max-height:90%; border-radius:12px; }
+.lightbox .close{
+  position:absolute; top:16px; right:20px; font-size:28px; line-height:1;
+  background:transparent; border:0; color:#fff; cursor:pointer;
+}
+
 
 <script>
 const tabs = document.querySelectorAll('.tabs .tab');
@@ -116,29 +128,34 @@ setActive('all'); // 기본값: All
     </div>
     
   <!-- 카드 그리드 -->
-    <div class="grid">
-      <a class="card" href="#img1" data-cat="branding,print"><img src="img/sample1.jpg" alt=""><span>브랜딩 키비주얼</span></a>
-      <a class="card" href="#img2" data-cat="proposal"><img src="img/sample2.jpg" alt=""><span>제안서 리디자인</span></a>
-      <a class="card" href="#img3" data-cat="fan"><img src="img/sample3.jpg" alt=""><span>팬서포트 굿즈</span></a>
-      <!-- 계속 추가… -->
-    </div>
+<!-- 카드 그리드 -->
+<div class="grid">
+  <a class="card" href="#img1" data-cat="branding,print">
+    <img src="img/sample1.jpg" alt=""><span>브랜딩 키비주얼</span>
+  </a>
+  <a class="card" href="#img2" data-cat="proposal">
+    <img src="img/sample2.jpg" alt=""><span>제안서 리디자인</span>
+  </a>
+  <a class="card" href="#img3" data-cat="fan">
+    <img src="img/sample3.jpg" alt=""><span>팬서포트 굿즈</span>
+  </a>
+  <!-- 계속 추가 -->
 </div>
 
-    <div class="grid">
-      <a href="#img1"><img class="thumb" src="img/sample1.jpg" alt="작업물1"></a>
-      <a href="#img2"><img class="thumb" src="img/sample2.jpg" alt="작업물2"></a>
-      <a href="#img3"><img class="thumb" src="img/sample3.jpg" alt="작업물3"></a>
-    </div>
+<!-- 라이트박스 (공용 1개만 둠) -->
+<div class="lightbox" id="lb">
+  <button class="close" aria-label="닫기">×</button>
+  <img alt="">
+</div>
 
-    <div id="img1" class="modal"><img src="img/sample1.jpg"><a href="#" class="close">닫기</a></div>
-    <div id="img2" class="modal"><img src="img/sample2.jpg"><a href="#" class="close">닫기</a></div>
-    <div id="img3" class="modal"><img src="img/sample3.jpg"><a href="#" class="close">닫기</a></div>
+
 
     <footer>© <span id="y"></span> Park JY. All rights reserved.</footer>
   </div>
   <script>document.getElementById('y').textContent=new Date().getFullYear()</script>
 </body>
 </html>
+
 
 
 
