@@ -8,6 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
 
+
     :root { --fg:#0f172a; --muted:#6b7280; --bg:#f8fafc; --card:#ffffff; --pri:#2563eb;}
     *{box-sizing:border-box} html,body{margin:0;padding:0;font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:var(--fg); background:var(--bg);}
     a{color:var(--pri); text-decoration:none}
@@ -23,14 +24,18 @@
     button:hover{filter:brightness(.95)}
     footer{margin:48px 0 16px;color:var(--muted);font-size:14px;text-align:center}
   
-.wrap{ max-width:1000px; margin:48px auto; padding:0 20px; }
+
 
 html { scrollbar-gutter: stable; }
 body { overflow-y: scroll; }
 
+
+.wrap{ max-width:1000px; margin:48px auto; padding:0 20px; }
+body.contact-page .wrap{ margin:24px auto; }
+
 </style>
 </head>
-<body>
+<body class="contact-page">
   <div class="wrap">
     <header>
       <div class="brand">Park JY</div>
