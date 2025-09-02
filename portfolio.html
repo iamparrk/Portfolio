@@ -4,148 +4,58 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Portfolio · Park JY</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-
-
   <style>
-    :root{ --fg:#0f172a; --muted:#6b7280; --bg:#f8fafc; --card:#ffffff; --pri:#2563eb; }
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:var(--fg);background:var(--bg)}
-    a{color:var(--pri);text-decoration:none}
-    a:hover{text-decoration:underline}
 
-    .wrap{max-width:1000px;margin:48px auto;padding:0 20px}
+    :root { --fg:#0f172a; --muted:#6b7280; --bg:#f8fafc; --card:#ffffff; --pri:#2563eb;}
+    *{box-sizing:border-box} html,body{margin:0;padding:0;font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:var(--fg); background:var(--bg);}
+    a{color:var(--pri); text-decoration:none} a:hover{text-decoration:underline}
+    
     header{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px}
     .brand{font-weight:800;font-size:20px}
     nav a{margin-left:16px;color:var(--muted)}
     h1{font-size:28px;margin:0 0 24px}
+    .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+    .thumb{width:100%;border-radius:12px;cursor:pointer;transition:.2s}
+    .thumb:hover{transform:scale(1.02)}
+    .modal{display:none;position:fixed;z-index:10;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,.8);}
+    .modal img{display:block;max-width:80%;max-height:80%;margin:60px auto;border-radius:12px}
+    .modal:target{display:block}
+    .close{display:block;text-align:center;margin-top:12px;color:#fff;font-weight:600}
     footer{margin:48px 0 16px;color:var(--muted);font-size:14px;text-align:center}
+  
+.wrap{ max-width:1000px; margin:48px auto; padding:0 20px; }
 
-    /* 탭 바 */
-    .tabs{display:flex;gap:8px;align-items:center;background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:8px 10px;box-shadow:0 6px 20px rgba(0,0,0,.04);overflow:auto}
-    .tab{position:relative;padding:10px 14px;border:0;background:transparent;cursor:pointer;color:#374151;font-weight:600;white-space:nowrap;border-radius:8px}
-    .tab:hover{background:#f3f4f6}
-    .tab.active{color:#1f2937}
-    .tab.active::after{content:"";position:absolute;left:10px;right:10px;bottom:-8px;height:3px;background:#2563eb;border-radius:3px}
+html { scrollbar-gutter: stable; }
+body { overflow-y: scroll; }
 
-    /* 그리드(이미지 카드) */
-    .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-top:14px}
-    .card{display:block;border-radius:12px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.05)}
-    .card img{width:100%;display:block}
-    .card[hidden]{display:none !important}
-
-    /* 라이트박스 */
-    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:50}
-    .lightbox.open{display:flex}
-    .lightbox img{max-width:90%;max-height:90%;border-radius:12px}
-    .lightbox .close{position:absolute;top:16px;right:20px;font-size:28px;background:transparent;border:0;color:#fff;cursor:pointer}
-
-    html { scrollbar-gutter: stable; }
-body { overflow-y: scroll; }   /* 선택: 하위 호환용 */
-    
-  </style>
+</style>
 </head>
-
 <body>
   <div class="wrap">
     <header>
-      <a class="brand" href="https://iamparrk.github.io/Portfolio/">Park JY</a>
+      <div class="brand">Park JY</div>
       <nav>
-        <a href="https://iamparrk.github.io/Portfolio/">About</a>
         <a href="https://iamparrk.github.io/Portfolio/portfolio.html">Projects</a>
+        <a href="https://iamparrk.github.io/Portfolio/">About</a>
         <a href="https://iamparrk.github.io/Portfolio/contact.html">Contact</a>
       </nav>
     </header>
 
-    <h1>Projects</h1>
-
-    <!-- 탭 바 -->
-    <div class="tabs" role="tablist" aria-label="Project categories">
-      <button class="tab active" data-filter="all" role="tab" aria-selected="true">All</button>
-      <button class="tab" data-filter="branding" role="tab">Branding</button>
-      <button class="tab" data-filter="proposal" role="tab">Proposal</button>
-      <button class="tab" data-filter="uiux" role="tab">UI/UX</button>
-      <button class="tab" data-filter="planning" role="tab">Planning</button>
-      <button class="tab" data-filter="art" role="tab">Art</button>
-      <button class="tab" data-filter="etc" role="tab">Etc</button>
-    </div>
-
-    <!-- 이미지 그리드 -->
+    <h1>Portfolio</h1>
     <div class="grid">
-      <a class="card" data-cat="branding,uiux"><img src="https://i.pinimg.com/736x/d3/02/b0/d302b09a0e6efb732c14deb58747e57f.jpg" alt="작업물1"></a>
-      <a class="card" data-cat="proposal"><img src="https://i.pinimg.com/736x/d3/02/b0/d302b09a0e6efb732c14deb58747e57f.jpg" alt="작업물2"></a>
-      <a class="card" data-cat="uiux"><img src="https://i.pinimg.com/736x/d3/02/b0/d302b09a0e6efb732c14deb58747e57f.jpg" alt="작업물3"></a>
-      <a class="card" data-cat="etc"><img src="https://i.pinimg.com/736x/d3/02/b0/d302b09a0e6efb732c14deb58747e57f.jpg" alt="작업물4"></a>
-      <a class="card" data-cat="planning, etc"><img src="https://i.pinimg.com/736x/d3/02/b0/d302b09a0e6efb732c14deb58747e57f.jpg" alt="작업물5"></a>
-      <a class="card" data-cat="branding,uiux"><img src="https://i.pinimg.com/736x/d3/02/b0/d302b09a0e6efb732c14deb58747e57f.jpg" alt="작업물6"></a>
-      <a class="card" data-cat="proposal"><img src="https://i.pinimg.com/736x/d3/02/b0/d302b09a0e6efb732c14deb58747e57f.jpg" alt="작업물7"></a>
-      <a class="card" data-cat="uiux"><img src="https://i.pinimg.com/736x/d3/02/b0/d302b09a0e6efb732c14deb58747e57f.jpg" alt="작업물8"></a>
-      <a class="card" data-cat="etc"><img src="https://i.pinimg.com/736x/d3/02/b0/d302b09a0e6efb732c14deb58747e57f.jpg" alt="작업물9"></a>
-      <a class="card" data-cat="planning, etc"><img src="https://i.pinimg.com/736x/d3/02/b0/d302b09a0e6efb732c14deb58747e57f.jpg" alt="작업물10"></a>
-      <a class="card" data-cat="art"><img src="https://i.pinimg.com/736x/d3/02/b0/d302b09a0e6efb732c14deb58747e57f.jpg" alt="작업물11"></a>
-      <!-- 계속 추가… -->
+      <a href="#img1"><img class="thumb" src="img/sample1.jpg" alt="작업물1"></a>
+      <a href="#img2"><img class="thumb" src="img/sample2.jpg" alt="작업물2"></a>
+      <a href="#img3"><img class="thumb" src="img/sample3.jpg" alt="작업물3"></a>
     </div>
 
-    <!-- 라이트박스 -->
-    <div class="lightbox" id="lb">
-      <button class="close" aria-label="닫기">×</button>
-      <img alt="">
-    </div>
+    <div id="img1" class="modal"><img src="img/sample1.jpg"><a href="#" class="close">닫기</a></div>
+    <div id="img2" class="modal"><img src="img/sample2.jpg"><a href="#" class="close">닫기</a></div>
+    <div id="img3" class="modal"><img src="img/sample3.jpg"><a href="#" class="close">닫기</a></div>
 
     <footer>© <span id="y"></span> Park JY. All rights reserved.</footer>
   </div>
-
   <script>document.getElementById('y').textContent=new Date().getFullYear()</script>
-
-  <script>
-  // 탭 필터
-  const tabs  = document.querySelectorAll('.tabs .tab');
-  const cards = document.querySelectorAll('.grid .card');
-
-    
-  function setActive(key){
-    tabs.forEach(t=>{
-      const on = t.dataset.filter === key;
-      t.classList.toggle('active', on);
-      t.setAttribute('aria-selected', on ? 'true' : 'false');
-    });
-    cards.forEach(c=>{
-      const cats = (c.dataset.cat || '').split(',').map(s=>s.trim());
-      c.hidden = (key !== 'all' && !cats.includes(key));
-    });
-  }
-  tabs.forEach(t => t.addEventListener('click', () => setActive(t.dataset.filter)));
-  setActive('all'); // 기본: 전체 보기
-
-// 기존 탭 코드 밑에 추가
-const hash = window.location.hash.slice(1);
-if (hash && [...tabs].some(t => t.dataset.filter === hash)) {
-  setActive(hash);
-}
-    
-  // 라이트박스
-  const lb    = document.getElementById('lb');
-  const lbImg = lb.querySelector('img');
-  document.querySelectorAll('.grid .card img').forEach(img=>{
-    img.style.cursor = 'zoom-in';
-    img.addEventListener('click', e=>{
-      e.preventDefault();
-      lbImg.src = img.getAttribute('data-full') || img.src;
-      lb.classList.add('open');
-    });
-  });
-  lb.addEventListener('click', (e)=>{ if(e.target===lb || e.target.classList.contains('close')) lb.classList.remove('open'); });
-  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') lb.classList.remove('open'); });
-  </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
