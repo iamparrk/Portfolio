@@ -38,6 +38,10 @@
     .lightbox.open{display:flex}
     .lightbox img{max-width:90%;max-height:90%;border-radius:12px}
     .lightbox .close{position:absolute;top:16px;right:20px;font-size:28px;background:transparent;border:0;color:#fff;cursor:pointer}
+
+    html { scrollbar-gutter: stable; }
+body { overflow-y: scroll; }   /* 선택: 하위 호환용 */
+    
   </style>
 </head>
 
@@ -134,6 +138,7 @@ if (hash && [...tabs].some(t => t.dataset.filter === hash)) {
   </script>
 </body>
 </html>
+
 
 
 
